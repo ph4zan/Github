@@ -1,5 +1,7 @@
 <?php
 
+require_once '../vendor/autoload.php';
+
 class Node {
     public $data;
     public $next;
@@ -23,10 +25,13 @@ class SinglyLinkedList {
             return;
         }
         $last_node = $this->head;
+        fb($last_node);
+
         while($last_node->next !== null) {
             $last_node = $last_node->next;
         }
         $last_node->next = $new_node;
+        fb($last_node);
     }
 
     public function print_list() {
@@ -44,4 +49,5 @@ $sll = new SinglyLinkedList();
 $sll->append(1);
 $sll->append(2);
 $sll->append(3);
+$sll->append(4);
 $sll->print_list();

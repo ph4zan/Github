@@ -23,6 +23,8 @@ abstract class Worker implements WorkerInterface
 
     abstract public function work();
 
+
+
     public function setName($value)
     {
         $this->name = $value;
@@ -31,6 +33,28 @@ abstract class Worker implements WorkerInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+
+    public function setAge($value)
+    {
+        $this->age = $value;
+    }
+
+    public function getAge(): string
+    {
+        return $this->age;
+    }
+
+
+    public function setHours($value)
+    {
+        $this->hours = $value;
+    }
+
+    public function getHours()
+    {
+        return $this->hours;
     }
 
 
