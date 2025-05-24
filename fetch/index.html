@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Layout</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <p>Fetch
+      JavaScript может отправлять сетевые запросы на сервер и подгружать новую информацию по мере необходимости.
+      Например, мы можем использовать сетевой запрос, чтобы:
+      Отправить заказ,
+      Загрузить информацию о пользователе,
+      Запросить последние обновления с сервера, …и т.п.<br>
+      Response предоставляет несколько методов, основанных на промисах, для доступа к телу ответа в различных форматах:<br>
+      response.text() – читает ответ и возвращает как обычный текст,<br>
+      response.json() – декодирует ответ в формате JSON,<br>
+      response.formData() – возвращает ответ как объект FormData (разберём его в следующей главе),<br>
+      response.blob() – возвращает объект как Blob (бинарные данные с типом),<br>
+      response.arrayBuffer() – возвращает ответ как ArrayBuffer (низкоуровневое представление бинарных данных),<br><br>
+      Api: https://api.github.com/users/ph4zan<br>
+      https://www.googleapis.com/books/v1/volumes?q=javascript<br>
+      https://jsonplaceholder.typicode.com/posts/2<br>
+    </p>
+
+
+    <div id="app" class="centered">
+      <div id="left">
+        <div><h1>Это главная часть</h1></div>
+        <form id="apiForm">
+          <input type="text" id="apiInput" placeholder="Введите URL API" required>
+          <button type="submit" id="submit">Загрузить</button>
+        </form>
+      </div>
+      <div id="right" class="hidden"></div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>

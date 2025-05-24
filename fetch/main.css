@@ -1,0 +1,76 @@
+body, html {
+  font-size: 24px;
+  font-family: Arial, sans-serif; 
+}
+#submit {
+  height: 35px;
+  /* padding: 10px; */
+  margin-top: 20px;
+  font-family: Arial, sans-serif; 
+  background-color: rgb(0, 190, 16);
+  color: aliceblue;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+  transition: all 0.3s ease;
+}
+
+/* Стили по умолчанию: центрирование */
+.centered {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column; /* чтобы кнопка была под текстом */
+}
+
+#left {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#right {
+  width: 50%;
+  padding: 20px;
+  border-left: 1px solid #ccc;
+  overflow-x: auto;          /* горизонтальная прокрутка, если текст широкий */
+  box-sizing: border-box;
+}
+
+#right pre {
+  white-space: pre-wrap;    /* перенос строк внутри pre */
+  word-break: break-word;   /* переносит очень длинные слова */
+  overflow-wrap: break-word;
+  margin: 0;
+  font-family: monospace;
+}
+
+/* Скрыта правая часть */
+.hidden {
+  display: none;
+}
+
+/* После загрузки: обычный flex с двумя колонками */
+.split {
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+/* Чтобы левый и правый блоки не были слишком узкими */
+#left, #right {
+  min-width: 300px;
+}
+
+#apiInput {
+  width: 500px;       /* шире */
+  height: 30px;       /* выше */
+  font-size: 16px;    /* текст покрупнее */
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+p {
+ margin-top: 0;
+}
