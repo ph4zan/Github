@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Conjugare Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+      padding: 20px;
+    }
+    .quiz-container {
+      background: white;
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    #conjugationTable {
+    margin: 10px auto 0 auto; /* Центрируем */
+    border-collapse: collapse;
+    width: 80%;
+    background: white;
+  }
+
+    #conjugationTable th,
+    #conjugationTable td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    #conjugationTable th {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h2 id="question"></h2>
+  <div id="options"></div>
+  <div id="result"></div>
+  <button id="restart" style="display: none;">Начать заного</button>
+</div>
+
+<button id="toggleTableBtn" style="width: 300px; display: block; margin: 20px auto 0;">Показать/скрыть таблицу</button>
+
+<table id="conjugationTable" style="display: none; margin-top: 10px; border-collapse: collapse;" border="1">
+  <thead>
+    <tr>
+      <th>Лицо</th>
+      <th>Форма</th>
+      <th>Перевод</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Eu</td><td>am</td><td>Я имею</td></tr>
+    <tr><td>Tu</td><td>ai</td><td>Ты имеешь</td></tr>
+    <tr><td>El / Ea</td><td>are</td><td>Он / Она имеет</td></tr>
+    <tr><td>Noi</td><td>avem</td><td>Мы имеем</td></tr>
+    <tr><td>Voi</td><td>aveți</td><td>Вы имеете</td></tr>
+    <tr><td>Ei / Ele</td><td>au</td><td>Они имеют</td></tr>
+  </tbody>
+</table>
+
+<script>
+  const quizData = {
+    'a avea': ['am', 'ai', 'are', 'avem', 'aveți', 'au']
+  };
+
+  const persons = ['eu', 'tu', 'el/ea', 'noi', 'voi', 'ei/ele'];
+  const correctForms = quizData['a avea'];
+  let currentIndex = 0;
+  let score = 0;
+  let usedPersons = [];
+
+  const questionEl = document.getElementById('question');
+  const optionsEl = document.getElementById('options');
+  const resultEl = document.getElementById('result');
+  const restartBtn = document.getElementById('restart');
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function startQuiz() {
+    currentIndex = 0;
+    score = 0;
+    usedPersons = shuffle([...Array(6).keys()]);
+    restartBtn.style.display = 'none';
+    resultEl.innerText = '';
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    if (currentIndex >= 6) {
+      questionEl.innerText = `Готово! Твой счёт: ${score}/6`;
+      optionsEl.innerHTML = '';
+      restartBtn.style.display = 'block';
+      return;
+    }
+
+    const i = usedPersons[currentIndex];
+    const face = persons[i];
+    const correct = correctForms[i];
+
+    questionEl.innerText = `Выбери правильную форму глагола "a avea" для "${face}"?`;
+ 
+    const options = new Set([correct]);
+    while (options.size < 4) {
+      options.add(correctForms[Math.floor(Math.random() * 6)]);
+    }
+
+    const shuffled = shuffle([...options]);
+    optionsEl.innerHTML = '';
+    shuffled.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.innerText = opt;
+      btn.onclick = () => {
+        if (opt === correct) {
+          resultEl.innerText = '✔️ Правильно!';
+          score++;
+        } else {
+          resultEl.innerText = `❌ Неверно! Правильный ответ: ${correct}`;
+        }
+        currentIndex++;
+        setTimeout(() => {
+          resultEl.innerText = '';
+          loadQuestion();
+        }, 1500);
+      };
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  restartBtn.onclick = startQuiz;
+
+  startQuiz();
+
+
+
+
+  const toggleTableBtn = document.getElementById('toggleTableBtn');
+const conjugationTable = document.getElementById('conjugationTable');
+
+toggleTableBtn.onclick = () => {
+  if (conjugationTable.style.display === 'none') {
+    conjugationTable.style.display = 'table';  // показать таблицу
+    toggleTableBtn.innerText = 'Скрыть таблицу';
+  } else {
+    conjugationTable.style.display = 'none';   // скрыть таблицу
+    toggleTableBtn.innerText = 'Показать таблицу';
+  }
+};
+</script>
+
+</body>
+</html>
