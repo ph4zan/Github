@@ -35,7 +35,7 @@
     #conjugationTable {
     margin: 10px auto 0 auto; /* Центрируем */
     border-collapse: collapse;
-    width: 80%;
+    width: 60%;
     background: white;
   }
 
@@ -57,10 +57,10 @@
   <h2 id="question"></h2>
   <div id="options"></div>
   <div id="result"></div>
-  <button id="restart" style="display: none;">Начать заного</button>
+  <button id="restart" style="display: none;">Начать заново</button>
 </div>
 
-<button id="toggleTableBtn" style="width: 300px; display: block; margin: 20px auto 0;">Показать/скрыть таблицу</button>
+<button style="width: 500px; margin: 0 auto; display: block; margin-top: 20px;" onclick="toggleTable()">Показать/Скрыть таблицу</button>
 
 <table id="conjugationTable" style="display: none; margin-top: 10px; border-collapse: collapse;" border="1">
   <thead>
@@ -70,23 +70,26 @@
       <th>Перевод</th>
     </tr>
   </thead>
-  <tbody>
-    <tr><td>Eu</td><td>am</td><td>Я имею</td></tr>
-    <tr><td>Tu</td><td>ai</td><td>Ты имеешь</td></tr>
-    <tr><td>El / Ea</td><td>are</td><td>Он / Она имеет</td></tr>
-    <tr><td>Noi</td><td>avem</td><td>Мы имеем</td></tr>
-    <tr><td>Voi</td><td>aveți</td><td>Вы имеете</td></tr>
-    <tr><td>Ei / Ele</td><td>au</td><td>Они имеют</td></tr>
-  </tbody>
+  <tbody></tbody>
 </table>
 
 <script>
-  const quizData = {
-    'a avea': ['am', 'ai', 'are', 'avem', 'aveți', 'au']
-  };
 
+  const verb = 'a avea'
+
+  const formData = {
+    'a avea': ['am', 'ai', 'are', 'avem', 'aveți', 'au'],
+    'a fi': ['sunt', 'ești', 'este', 'suntem', 'sunteți', 'sunt'],
+    'a merge': ['merg', 'mergi', 'merge', 'mergem', 'mergeți', 'merg']
+  };
+  const translationsData = {
+    'a avea': ['Я имею', 'Ты имеешь', 'Он/Она имеет', 'Мы имеем', 'Вы имеете', 'Они имеют'],
+    'a fi': ['Я есть', 'Ты есть', 'Он/Она есть', 'Мы есть', 'Вы есть', 'Они есть'],
+    'a merge': ['Я иду', 'Ты идёшь', 'Он/Она идёт', 'Мы идём', 'Вы идёте', 'Они идут'],
+  };
   const persons = ['eu', 'tu', 'el/ea', 'noi', 'voi', 'ei/ele'];
-  const correctForms = quizData['a avea'];
+
+  const correctForms = formData[verb];
   let currentIndex = 0;
   let score = 0;
   let usedPersons = [];
@@ -125,7 +128,7 @@
     const face = persons[i];
     const correct = correctForms[i];
 
-    questionEl.innerText = `Выбери правильную форму глагола "a avea" для "${face}"?`;
+    questionEl.innerText = `Выбери правильную форму глагола "${verb}" для "${face}"?`;
  
     const options = new Set([correct]);
     while (options.size < 4) {
@@ -136,8 +139,10 @@
     optionsEl.innerHTML = '';
     shuffled.forEach(opt => {
       const btn = document.createElement('button');
+      btn.classList.add('option-btn');
       btn.innerText = opt;
       btn.onclick = () => {
+        document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
         if (opt === correct) {
           resultEl.innerText = '✔️ Правильно!';
           score++;
@@ -154,26 +159,29 @@
     });
   }
 
-  restartBtn.onclick = startQuiz;
+  function toggleTable() {
+  const container = document.getElementById('conjugationTable');
+  container.style.display = (container.style.display === 'none' || container.style.display === '') ? 'table' : 'none';
 
-  startQuiz();
+}
 
+function renderTable(verb) {
+  const tbody = document.querySelector('#conjugationTable tbody');
+  tbody.innerHTML = ''; // очищаем старое
 
+  formData[verb].forEach((form, index) => {
+    const person = persons[index];
+    const translation = translationsData[verb][index];
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${person}</td><td>${form}</td><td>${translation}</td>`;
+    tbody.appendChild(row);
+  });
+}
 
+restartBtn.onclick = startQuiz;
+renderTable(verb);
+startQuiz();
 
-  const toggleTableBtn = document.getElementById('toggleTableBtn');
-const conjugationTable = document.getElementById('conjugationTable');
-
-toggleTableBtn.onclick = () => {
-  if (conjugationTable.style.display === 'none') {
-    conjugationTable.style.display = 'table';  // показать таблицу
-    toggleTableBtn.innerText = 'Скрыть таблицу';
-  } else {
-    conjugationTable.style.display = 'none';   // скрыть таблицу
-    toggleTableBtn.innerText = 'Показать таблицу';
-  }
-};
 </script>
-
 </body>
 </html>
