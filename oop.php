@@ -21,7 +21,7 @@
 */
 
 class Person {
-    public string $name;
+    protected string $name;
 
     protected int $age;
 
@@ -32,11 +32,21 @@ class Person {
     }
 
     public function introduce() {
-        return "Меня зовут очень хорошо {$this->name}, мне {$this->age} лет";
+        return "Меня зовут {$this->name}, мне {$this->age} лет";
+    }
+
+    public function getName(): string {
+        return $this->name;
     }
 }
 
-class Teacher extends Person {
+interface TeacherInterface {
+    public function introduce(): string;
+    public function teach($subject): string;
+    public function getName(): string;
+}
+
+class Teacher extends Person implements TeacherInterface {
     private array $subjects;
 
     public function __construct($name, $age, $subjects)
@@ -45,17 +55,42 @@ class Teacher extends Person {
         $this->subjects = $subjects;
     }
 
-    public function introduce() {
+    public function introduce(): string {
         return parent::introduce().", я преподаю: ". implode(',', $this->subjects);
     }
 
-    public function teach($subject) {
+    public function teach($subject): string {
         if(in_array($subject, $this->subjects)) {
             return "Я преподаю {$subject}\n";
         } else {
             return "Я не могу преподавать {$subject}\n";
         }
     }
+}
+
+class GuestLecturer implements TeacherInterface {
+    private array $subjects;
+
+    public function __construct($subjects)
+    {
+        $this->subjects = $subjects;
+    }
+
+    public function introduce(): string {
+        return "Я преподаю: ". implode(',', $this->subjects);
+    }
+
+    public function teach($subject): string {
+        if(in_array($subject, $this->subjects)) {
+            return "Я преподаю {$subject}\n";
+        } else {
+            return "Я не могу преподавать {$subject}\n";
+        }
+    }
+
+    public function getName(): string {
+        return 'Приглашенный лектор';
+    } 
 }
 
 
@@ -77,7 +112,7 @@ class Student extends Person {
 class Course {
     private string $name;
 
-    private Teacher $teacher;
+    private TeacherInterface $teacher;
 
     private array $students;
 
@@ -93,9 +128,9 @@ class Course {
     }
 
     public function getCourseInfo() {
-        return "Курс: $this->name
-Преподаватель: ". $this->teacher->name ."
-Количество студентов: " . count($this->students);
+        return "Курс: $this->name \n
+Преподаватель: {$this->teacher->getName()} \n
+Количество студентов:". count($this->students) ."\n";
     }
 }
 /*
@@ -119,8 +154,11 @@ echo $course->getCourseInfo();
 */
 
 
-$teacher = new Teacher("Мария", 35, ["ООП"]);
-$course = new Course("Продвинутый PHP", $teacher);
+// $teacher = new Teacher("Мария", 35, ["ООП"]);
+// $course = new Course("Продвинутый PHP", $teacher);
+
+$lecturer = new GuestLecturer(["ООП"]); 
+$course = new Course("PHP для начинающих", $lecturer); // Работает!
 
 $student1 = new Student("Иван", 22, "Продвинутый PHP");
 $student2 = new Student("Ольга", 23, "Продвинутый PHP");
@@ -128,4 +166,4 @@ $student2 = new Student("Ольга", 23, "Продвинутый PHP");
 $course->addStudent($student1);
 $course->addStudent($student2);
 
-echo $course->getCourseInfo();
+echo $course->getCourseInfo(); 
