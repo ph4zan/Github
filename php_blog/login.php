@@ -15,11 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->execute([$username]);
     $user = $stmt->fetch();
-    echo '<pre>';
-    print_r($user);
-    echo '</pre>';
-    exit;
-
 
     if ($user && password_verify($password, $user['password_hash'])) {
         session_regenerate_id(true); // 🔒 Фиксация сессии
