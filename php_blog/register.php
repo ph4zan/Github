@@ -5,6 +5,15 @@ require 'includes/csrf.php';
 require 'includes/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $userCaptcha = trim($_POST['captcha'] ?? '');
+    $realCaptcha = $_SESSION['captcha_text'] ?? '';
+
+    if (strcasecmp($userCaptcha, $realCaptcha) !== 0) {
+    die("❌ Неверная капча. Попробуйте снова.");
+    }
+    
+    unset($_SESSION['captcha_text']);
+
     if (!verify_csrf_token($_POST['csrf_token'])) {
         exit('CSRF token mismatch');
     }

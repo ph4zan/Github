@@ -2,4 +2,4 @@
 session_start();
 $_SESSION = [];
 session_destroy();
-header('Location: /php_blog/login.php');
+header('Location: /github/php_blog/login.php');
