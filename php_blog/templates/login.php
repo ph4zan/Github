@@ -1,4 +1,4 @@
-<form method="POST" action="/github/php_blog/login.php">
+<form method="POST">
     <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
     <input name="username" required placeholder="Имя пользователя">
     <input name="password" type="password" required placeholder="Пароль">
@@ -9,4 +9,4 @@
     </p>
     <button type="submit">Войти</button>
 </form> 
-<p>Нет аккаунта? <a href="register.php">Зарегистрироваться</a></p>
+<p>Нет аккаунта? <a href="?action=reg">Зарегистрироваться</a></p>

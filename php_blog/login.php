@@ -1,9 +1,4 @@
 <?php
-session_start();
-require 'includes/db.php';
-require 'includes/csrf.php';
-require 'includes/functions.php';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userCaptcha = trim($_POST['captcha'] ?? '');
     $realCaptcha = $_SESSION['captcha_text'] ?? '';
@@ -28,7 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && password_verify($password, $user['password_hash'])) {
         session_regenerate_id(true); // 🔒 Фиксация сессии
         $_SESSION['user_id'] = $user['id'];
-        header('Location: /github/php_blog/index.php');
+        header("Location: index.php");
+        exit;   
     } else {
         exit('Неверный логин или пароль');
     }

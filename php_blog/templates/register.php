@@ -1,4 +1,4 @@
-<form method="POST" action="/github/php_blog/register.php">
+<form method="POST">
     <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
     <input name="username" required placeholder="Имя пользователя">
     <input name="password" type="password" required placeholder="Пароль">

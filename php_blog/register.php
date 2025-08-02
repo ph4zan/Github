@@ -1,9 +1,4 @@
 <?php
-session_start();
-require 'includes/db.php';
-require 'includes/csrf.php';
-require 'includes/functions.php';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userCaptcha = trim($_POST['captcha'] ?? '');
     $realCaptcha = $_SESSION['captcha_text'] ?? '';
@@ -30,7 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare("INSERT INTO users (username, password_hash) VALUES (?, ?)");
     try {
         $stmt->execute([$username, $hash]);
-        header('Location: login.php');
+        echo 'Пользователь создан<br>Все пользователи: ';
+        $stmt = $pdo->prepare("SELECT * from users");
+        $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($users as $user) {
+            echo $user['username'] . '<br>';
+        }
+        echo '<a href="?action=login">Войти</a>';
     } catch (PDOException $e) {
         exit('Пользователь уже существует');
     }
