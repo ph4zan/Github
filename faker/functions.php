@@ -34,3 +34,24 @@ function toFeminineSurname(string $surname): string {
     
     return $surname;
 }
+
+
+function findStudent($group, $name) {
+    foreach($group as $user) {
+        if(in_array($name, $user)) {
+            return $user;
+        }
+    }
+    return null;
+}
+
+
+function phpStudents($group) {
+    $phpStudents = [];
+    foreach ($group as $user) {
+        if(in_array('PHP', $user['course'])) {
+            $phpStudents []= $user; 
+        }
+    }
+    return $phpStudents;
+}
