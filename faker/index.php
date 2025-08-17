@@ -7,6 +7,8 @@ $male_names = file('lists/male_names_rus.txt');
 $male_surnames = file('lists/male_surnames_rus.txt');
 $lang = ['Python','JavaScript','Java','Typescript','C#','PHP','C++','C','Ruby','Golang','HTML','SQL'];
 
+
+
 function faker() {
     global $female_names;
     global $male_names;
