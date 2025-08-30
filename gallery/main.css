@@ -1,49 +1,17 @@
 body {
     font-family: Arial, sans-serif;
-    background: #212121;
+    background: #0a0a0a;
     padding: 30px;
-  }
-  .search-form {
-    margin-bottom: 20px;
-    padding: 15px;
-    background: rgb(27, 27, 27);
-    border-radius: 8px;
-    display: flex;
-    gap: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  }
-  .search-form input[type="text"] {
-    flex: 1;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #262626;
-    background: rgb(21, 21, 21);
-    font-size: 14px;
     color: white;
-  }
-  .search-form button {
-    padding: 10px 15px;
-    background: #2ecc71;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  .search-form button:hover {
-    background: #27ae60;
   }
   .post {
     padding: 12px;
-    background: white;
+    background: rgb(249, 255, 238);
     border-radius: 6px;
     margin-bottom: 10px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   }
-  .date {
-    color: gray;
-    font-size: 12px;
-  }
+
   .container {
     display: grid;
     grid-template-columns: repeat(5, 250px);
@@ -51,8 +19,34 @@ body {
     justify-content: center;
   }
   
-  .item {
-    background: lightblue;
-    padding: 10px;
-    width: 250px;
+  p {
+    color:aliceblue;
+    font-size: 16px;
+    max-width: 250px;
+    overflow-wrap: break-word; 
+  }
+
+  .form-text {
+    color: white;
+  }
+
+  button.btn a {
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+
+  h2 {
+    margin-right: 500px ;
+  }
+
+  .centered {
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60em
+  }
+
+  .form-select {
+    margin: 10px 0px 20px 0px;
+    width: 250px
   }
