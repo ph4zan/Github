@@ -37,7 +37,10 @@ if(isset($_GET['action']) && $_GET['action']=='add') {
     require_once 'add.php';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $title = $_POST['title'];
-        $photo = $_POST['photo'];
+        $photo = $_FILES['photo']['name'];
+        $targetDir = __DIR__ . '/images/';
+        $targetFile = $targetDir . basename($_FILES['photo']['name']);
+        move_uploaded_file($_FILES['photo']['tmp_name'], $targetFile);
         $date = date('Y-m-d',rand(time()-60*60*24*365*5, time()));
         $conn->query("INSERT INTO posts (title, photo, date) VALUES ('$title', '$photo', '$date')");
         header("Location: " . $_SERVER["PHP_SELF"]);

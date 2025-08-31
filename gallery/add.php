@@ -1,7 +1,7 @@
 
 <div class="centered">
 <h2>Добавление фото</h2>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label class="form-label" >Заголовок:</label>
         <input style="width: 1000px;" type="text" class="form-control" name="title">
