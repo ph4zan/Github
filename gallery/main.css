@@ -50,3 +50,26 @@ body {
     margin: 10px 0px 20px 0px;
     width: 250px
   }
+
+  button.btn-primary {
+    margin-bottom: 15px;
+  }
+
+  input.form-control {
+    position: relative;
+    top: -50px;
+    display: block;
+    margin: 0 auto 0;
+    width: 80vh;
+  }
+
+  input.form-submit {
+    position: relative;
+    top: -50px;
+  }
+
+  .form-select {
+    position: relative;
+    top: -60px;
+  }
+  

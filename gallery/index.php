@@ -11,7 +11,11 @@
 <body>
 <a href="?"><button type="button" class="btn btn-primary">Главная</button></a>
 <a href="?action=add"><button type="button" class="btn btn-primary">Добавить фото</button></a>
-
+<div class="mb-3">
+    <form method="post" class="form-search">
+    <input type="text" name="search" class="form-control" placeholder="Поиск">
+    </form>
+  </div>
 <?php
 $host = "localhost"; 
 $user = "root";
@@ -27,12 +31,12 @@ while ($row = $result->fetch_assoc()) {
         $views []= $row;
     }
 }
-// if(isset($_GET['search'])) {
-//     if(in_array($_GET['search'], $images)) {
-//         $images = [$_GET['search']];
-//     }
-// }
-
+if(isset($_POST['search']) && $_POST['search'] !== '') {
+    $search = $_POST['search'];
+    $views = array_filter($views, function($v) use ($search) {
+        return str_contains(strtolower($v['title']), strtolower($search));
+    });
+}
 if(isset($_GET['action']) && $_GET['action']=='add') {
     require_once 'add.php';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
