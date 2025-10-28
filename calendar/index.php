@@ -1,55 +1,35 @@
 <?php
-$months_length = [
-    '01' => 31,
-    '02' => 28,
-    '03' => 31,
-    '04' => 30,
-    '05' => 31,
-    '06' => 30,
-    '07' => 31,
-    '08' => 31,
-    '09' => 30,
-    '10' => 31,
-    '11' => 30,
-    '12' => 31
-];
-$week_day = [
-    'Mon' => 1,
-    'Tue' => 2,
-    'Wed' => 3,
-    'Thu' => 4,
-    'Fri' => 5,
-    'Sat' => 6,
-    'Sun' => 7
-];
 $date = new DateTime();
-$month = $date->format('m'); // номер выбранного месяца 
-$numDays = $months_length[$month]; // количество дней выбранного месяца
-$dateweek = new DateTime("01-{$month}-2025"); // первый день месяца
-$monthStartDay = $dateweek->format('D'); // день недели первого дня месяца
-$monthStartDay = $week_day[$monthStartDay]; // номер дня недели первого дня месяца
-$resMonth = $date->format('F');
-$res = '';
+$countDays = $date->format('t'); // количество дней выбранного месяца
+$month = $date->format('F');
+$dateweek = new DateTime("01 {$month} 2025"); // первый день месяца
+$monthStartDay = $dateweek->format('N'); // номер дня недели первого дня месяца
+$date->modify('-1 month');
+$countLastMonth = $date->format('t'); // количество дней прошлого месяца
+$html = '';
 for($i=0; $i<6; $i++) {
-    $res .= '<tr>';
+    $html .= '<tr>';
     for($j=1; $j<=7; $j++) {
-        if($i==0 && $j<$monthStartDay) {
-                $res .=  '<td></td>';
-                continue;
-        }
+        $classes = [];
         $current = $i*7+$j-$monthStartDay+1;
-        if($current>$numDays) {
-            continue;
-        }
-        if($j>=6) {
-            $res .= "<td class=\"holliday\">$current</td>";
+        if($i==0 && $j<$monthStartDay) {
+            $current = $countLastMonth - $monthStartDay + $j+1;
+            $classes[] = 'other-month';
+        } elseif ($current>$countDays && $j == 1) {
+            break;
         } else {
-            $res .=  "<td>$current</td>";
+            if($current>$countDays) {
+                $current -= $countDays;
+                $classes[] = 'other-month';
+            }
+            if($j >= 6) {
+                $classes[] = 'holliday';
+            }
         }
+        $html .= "<td class='" . implode(' ', $classes) . "'>$current</td>";
     }
-    $res .= '</tr>';
+    $html .= '</tr>';
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -63,11 +43,15 @@ for($i=0; $i<6; $i++) {
             border: 1px solid red;
             color: red;
         }
+
+        .other-month {
+            opacity: 0.4;
+        }
     </style>
 </head>
 <body>
     <h2>
-    <?= $resMonth .' '. 2025?>
+    <?= $month .' '. 2025?>
     </h2>
 <table border="1">
         <thead>
@@ -81,6 +65,6 @@ for($i=0; $i<6; $i++) {
                 <th class="holliday">Вс</th>
             </tr>
         </thead>
-    <?= $res ?>
+    <?= $html ?>
 </body>
 </html>
