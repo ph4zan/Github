@@ -15,6 +15,7 @@ function normalizeToYear(DateTime $d, int $year): DateTime {
     return $d;
 }
 
+
 function getDaysUntilBirthday(string $birthday) {
     // Входная дата может содержать год рождения, например '2005-09-15'
     $birth = new DateTime($birthday);
@@ -30,11 +31,13 @@ function getDaysUntilBirthday(string $birthday) {
     }
 
     $diff = $today->diff($nextBirthday);
-    $res = [
-    'days' => $diff->d,
-    'months' => $diff->m
-];
-    return $res;
+   return (int) $diff->days;
 }
 
-print_r(getDaysUntilBirthday('2005-10-18'));
+echo "Введите год рожднения :";
+$year = (int)trim(fgets(STDIN));
+echo "Введите месяц рожднения :";
+$month = (int)trim(fgets(STDIN));
+echo "Введите день рожднения :";
+$day = (int)trim(fgets(STDIN));
+echo "до дня рождения осталось ",getDaysUntilBirthday("{$year}-{$month}-{$day}");

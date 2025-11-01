@@ -38,11 +38,11 @@
         }
         const res = await response.json();
         if(res.message) {
-            
-        }
-        resDiv.textContent = res.message;
+            resDiv.textContent = res.message;
         name.value = '';
         age.value = '';
+        }
+        
         } catch(err) {
             console.log(err.message)
         }

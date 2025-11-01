@@ -1,4 +1,5 @@
 <?php
+include 'C:/xampp/htdocs/lib/FirePHPCore/fb.php';
 $date = new DateTime();
 $countDays = $date->format('t'); // количество дней выбранного месяца
 $month = $date->format('F');
@@ -11,15 +12,23 @@ for($i=0; $i<6; $i++) {
     $html .= '<tr>';
     for($j=1; $j<=7; $j++) {
         $classes = [];
+        /*
+        Вычисляем номер дня, который должен отображаться в текущей ячейке, предполагая, что календарь начинается с 1-го числа текущего месяца.
+        */
         $current = $i*7+$j-$monthStartDay+1;
+         //$i*7 + $j — общий номер ячейки от начала таблицы (от 1 до 42).
+         // fb($monthStartDay,'monthStartDay');
+         
         if($i==0 && $j<$monthStartDay) {
             $current = $countLastMonth - $monthStartDay + $j+1;
+           // fb($current,'current-прошлый месяц');
             $classes[] = 'other-month';
         } elseif ($current>$countDays && $j == 1) {
             break;
         } else {
             if($current>$countDays) {
                 $current -= $countDays;
+                
                 $classes[] = 'other-month';
             }
             if($j >= 6) {
